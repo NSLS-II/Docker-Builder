@@ -15,7 +15,7 @@ docker container rm $UBUNTU_18_04_ID
 echo "Starting Debian8 build"
 echo "Creating container"
 docker run --cidfile debian8_id.cid isa/debian8
-DEBIAN_8_ID=$(cat ubuntu18.04_id.cid)
+DEBIAN_8_ID=$(cat debian8_id.cid)
 rm debian8_id.cid
 echo "Copying package..."
 docker cp $DEBIAN_8_ID:/installSynApps/DEPLOYMENTS $(pwd)/DEPLOYMENTS/.
