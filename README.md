@@ -1,10 +1,10 @@
 # Docker-Builder
 
-An exploration into using docker containers to trigger builds on all OS with installSynApps.
+An exploration into using docker containers to trigger builds on all OS with [installSynApps](https://github.com/epicsNSLS2-deploy/installSynApps).
 
 ### Setup
 
-For using Docker-Builder, you will need an active docker installation on a modern linux machine.
+For using `Docker-Builder`, you will need an active docker installation on a modern linux machine.
 
 Here are links to guides for setting up Docker engine for various linux distributions:
 
@@ -41,7 +41,7 @@ ubuntu              18.04               a2a15febcdf3        5 days ago          
 debian              9                   f26939cc87ef        6 days ago          101MB
 debian              8                   2c5f66c0d4e0        6 days ago          129MB
 ```
-Note that you will see an image for the distribution containers, and then isa/$DISTRIBUTION, which are the actual build containers. Each container is slightly smaller than 1GB in size.
+Note that you will see an image for the distribution containers (ubuntu 18.04, debian 8 etc.), and then `isa/$DISTRIBUTION` (ex. isa/debian9, isa/ubuntu19.04), which are the actual build containers. Each container is slightly smaller than 1GB in size.
 
 ### Running the Builds
 
@@ -60,6 +60,8 @@ To see a list of supported distributions, run:
 ./run_container.sh help
 ```
 
+It is recommended to run `Docker-Builder` on a fairly powerful machine, as the build scales fairly well along with the number of CPU cores. Each container takes roughly 5 minutes to build on a 16 core Intel Xeon Silver 4110 based machine, with default docker hardware usage settings. With the currently supported 4 distributions, a `./run_container all` run took around 20 minutes on the same machine.
+
 The generated containers should be automatically closed once the bundle has been moved to your local machine. In the event that this does not happen, you may free up the docker containers with:
 ```
 docker container prune
@@ -68,3 +70,19 @@ docker container prune
 ### Output Bundles
 
 Running a docker image container will place the generated output bundle in the `DEPLOYMENTS` directory in the `Docker-Builder` folder.
+
+### Contributing
+
+The `Docker-Builder` has been tested with `./run_container.sh all` on the following host distributions:
+
+* Ubuntu 18.04 LTS
+
+If you have used `Docker-Builder` on an OS not listed here, please feel free to create a pull request if it was successful, or if an error was encountered, please report it as an [issue](https://github.com/epicsNSLS2-deploy/Docker-Builder/issues).
+
+In addition, if you have created a Dockerfile for a distribution not supported by default by `Docker-Builder` feel free to create a pull request.
+
+### Future plans
+
+Currently, `Docker-Builder` pulls its install configuration from the upstream of `installSynApps`, meaning that configuration is limited. The intention is to add a `installConfiguration` directory in each distribution's directory to allow fine control of what modules are pulled and built by the container.
+
+If you would like any other feature to be added to `Docker-Builder`, please add it as an [issue](https://github.com/epicsNSLS2-deploy/Docker-Builder/issues).
