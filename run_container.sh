@@ -38,6 +38,5 @@ else
 run_container "$to_run"
 fi
 
-
 echo "Build done. Bundles placed in ./DEPLOYMENTS"
 exit
