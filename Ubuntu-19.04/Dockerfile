@@ -1,5 +1,5 @@
 # The ubuntu 18.04 builder
-FROM ubuntu:18.04
+FROM ubuntu:19.04
 # get the important packages
 RUN apt-get update && apt-get upgrade -y && apt-get install python3-pip -y
 RUN python3 -m pip install --upgrade pip
