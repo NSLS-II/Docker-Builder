@@ -5,5 +5,5 @@
 
 git clone --single-branch --branch=feature-custom-build-scripts https://github.com/jwlodek/installSynApps
 cd installSynApps
-python3 installCLI.py -y -c addtlConfDirs/configureDeb8
+python3 installCLI.py -y -c addtlConfDirs/configureDeb8 -i /epics
 
