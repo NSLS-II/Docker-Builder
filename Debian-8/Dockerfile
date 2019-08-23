@@ -13,13 +13,16 @@ RUN apt-get -y install gcc g++ git wget tar make cmake
 
 # Required Packages for building EPICS
 RUN apt-get -y install libxml2-dev libpcre3-dev re2c libxext-dev libreadline-dev
-RUN apt-get -y install  libx11-dev libusb-dev libusb-1.0-0-dev libraw1394-dev libjpeg-dev
+RUN apt-get -y install  libx11-dev libusb-dev libusb-1.0-0-dev libjpeg-dev
 
 # Boost packages used by EPICS unit testing and several drivers/modules
-RUN apt-get -y libboost-dev libboost-test-dev libboost-system-dev 
+RUN apt-get -y install libboost-dev libboost-test-dev libboost-system-dev 
 
 # Need libzmq3-dev as part of debian8 docker image to build ADEiger driver
-RUN apt-get -y libzmq3-dev 
+RUN apt-get -y install libzmq3-dev 
+
+# Required for ADPointGrey driver
+RUN apt-get -y install libraw1394-dev
 
 # Install distro package
 RUN python3 -m pip install distro
