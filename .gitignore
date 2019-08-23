@@ -3,3 +3,5 @@
 *.tgz
 *README*.txt
 *.cid
+*.log
+logs/

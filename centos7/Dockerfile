@@ -14,7 +14,7 @@ RUN yum -y install git wget tar make cmake gcc gcc-c++ pkgconfig
 
 # Packages required for building EPICS
 RUN yum -y install libxml2-devel pcre-devel re2c libXext-devel
-RUN yum -y install libjpeg-devel readline-devel libusb-devel
+RUN yum -y install libjpeg-devel readline-devel libusb-devel libusbx-devel
 
 # Boost packages used by EPICS unit testing and several drivers/modules
 RUN yum -y install boost-devel
