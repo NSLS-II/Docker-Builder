@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# This bash script will be run with when the docker image generated from the
-# Dockerfile in this directory is run
+# This bash script will be run with when the docker image is run
 
 git clone https://github.com/epicsNSLS2-deploy/installSynApps
 cd installSynApps

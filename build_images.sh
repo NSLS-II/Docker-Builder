@@ -17,3 +17,7 @@ cd ..
 cd Debian-9
 docker build -t isa/debian9 .
 cd ..
+
+cd CentOS-7
+docker build -t isa/centos7 .
+cd ..

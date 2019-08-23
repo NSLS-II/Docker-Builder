@@ -24,7 +24,7 @@ function print_help () {
     echo
     echo "  Ex. ./run_container.sh ubuntu18.04"
     echo
-    echo "Supported containers: [ ubuntu18.04, ubuntu19.04, debian8, debian9 ]"
+    echo "Supported containers: [ ubuntu18.04, ubuntu19.04, debian8, debian9, centos7 ]"
     echo
     exit
 }
@@ -44,7 +44,7 @@ fi
 if [ "$TO_RUN" != "help" ];
 then
 case $TO_RUN in 
-    ubuntu18.04|ubuntu19.04|debian8|debian9|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
+    ubuntu18.04|ubuntu19.04|debian8|debian9|centos7|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
     *) echo "ERROR - $TO_RUN is not a supported container"
        print_help;;
 esac
@@ -60,6 +60,7 @@ run_container ubuntu18.04
 run_container ubuntu19.04
 run_container debian8
 run_container debian9
+run_container centos7
 else
 run_container "$TO_RUN"
 fi
