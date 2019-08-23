@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# This bash script will be run with when the docker image is run
+
+git clone https://github.com/epicsNSLS2-deploy/installSynApps
+cd installSynApps
+python3 -u installCLI.py -y -c addtlConfDirs/configureDeb9 -i /epics
