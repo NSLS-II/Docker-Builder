@@ -9,7 +9,7 @@ RUN apt-get install python3 python3-pip -y
 RUN python3 -m pip install --upgrade pip
 
 # Install required build tool packages
-RUN apt-get -y install gcc g++ git wget tar make cmake
+RUN apt-get -y install gcc g++ git wget tar make cmake pkg-config
 
 # Required Packages for building EPICS
 RUN apt-get -y install libxml2-dev libpcre3-dev re2c libxext-dev libreadline-dev
