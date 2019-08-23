@@ -9,7 +9,7 @@ RUN yum -y install python3-pip python3
 RUN python3 -m pip install --upgrade pip
 
 # Required build packages
-RUN yum -y install git wget tar make cmake gcc g++
+RUN yum -y install git wget tar make cmake gcc g++ pkgconfig
 
 # Packages required for building EPICS
 RUN yum -y install libxm12-dev libpcre3-dev re2c libxext-dev
