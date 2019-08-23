@@ -16,7 +16,7 @@ Here are links to guides for setting up docker engine for various linux distribu
 
 ### Generating the Images
 
-Docker-Builder works by creating Docker image containers for each OS on your system. When run, these containers clone the [installSynApps](https://github.com/epicsNSLS2-deploy/installSynApps) python module, and use it to clone, build, and package all of EPICS, synApps, and areaDetector.
+`Docker-Builder` works by creating Docker image containers for each OS on your system. When run, these containers clone the [installSynApps](https://github.com/epicsNSLS2-deploy/installSynApps) python module, and use it to clone, build, and package all of EPICS, synApps, and areaDetector.
 
 To generate the docker container images, clone the Docker-Builder repository with:
 ```
@@ -59,7 +59,7 @@ Once the images are created, you may execute a build for a supported container b
 ```
 ./run_container.sh ubuntu18.04
 ```
-**Note that the distribution name passed to the script must match the isa/ Docker image.**
+**NOTE: The distribution name passed to the script must match the isa/ Docker image.**
 
 To generate bundles for all supported distributions, run:
 ```
@@ -83,9 +83,21 @@ docker container prune
 
 Running a docker image container will place the generated output bundle in the `DEPLOYMENTS` directory in the `Docker-Builder` folder.
 
+### Supported Distributions
+
+Supported linux distributions are whatever distributions have a Dockerfile in `Docker-Builder`. Currently this includes:
+
+* Ubuntu 18.04
+* Ubuntu 19.04
+* Debian 8
+* Debian 9
+* CentOS 7
+
+Feel free to make an issue or pull request if you desire further distribution support.
+
 ### Contributing
 
-The `Docker-Builder` has been tested with `./run_container.sh all` on the following host distributions:
+The `Docker-Builder` has been tested with `.build_image.sh all` and `./run_container.sh all` on the following host distributions:
 
 * Ubuntu 18.04 LTS
 * Debian 9
@@ -96,6 +108,8 @@ In addition, if you have created a Dockerfile for a distribution not supported b
 
 ### Future plans
 
-Currently, `Docker-Builder` pulls its install configuration from the upstream of `installSynApps`, meaning that configuration is limited. The intention is to add a `installConfiguration` directory in each distribution's directory to allow fine control of what modules are pulled and built by the container.
+Currently, `Docker-Builder` pulls its install configuration from the upstream of `installSynApps`, meaning that configuration is limited. The intention is to create a git repository containing all install configurations that may be required. Updating this repository and then triggering a build will cause the image to use updated install configurations.
+
+Alternatively, another possible solution is to include and install configuration for each distribution with `Docker-Builder` though this would mean a required rebuild of all images to build with new versions.
 
 If you would like any other feature to be added to `Docker-Builder`, please add it as an [issue](https://github.com/epicsNSLS2-deploy/Docker-Builder/issues).
