@@ -4,5 +4,6 @@
 
 git clone https://github.com/epicsNSLS2-deploy/installSynApps
 cd installSynApps
-python3 -u installCLI.py -y -c addtlConfDirs/configureDeb9 -i /epics
+git clone https://github.com/epicsNSLS2-deploy/Install-Configurations
+python3 -u installCLI.py -y -c Install-Configurations/configureDeb9 -i /epics
 

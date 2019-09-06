@@ -18,7 +18,7 @@ function print_help () {
     echo
     echo "  Ex. ./build_image.sh ubuntu18.04"
     echo
-    echo "Supported distributions: [ ubuntu18.04, ubuntu19.04, debian8, debian9, centos7 ]"
+    echo "Supported distributions: [ ubuntu18.04, ubuntu19.04, debian8, debian9, debian10, centos7 ]"
     echo
     exit
 }
@@ -38,7 +38,7 @@ fi
 if [ "$TO_RUN" != "help" ];
 then
 case $TO_RUN in 
-    ubuntu18.04|ubuntu19.04|debian8|debian9|centos7|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
+    ubuntu18.04|ubuntu19.04|debian8|debian9|debian10|centos7|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
     *) echo "ERROR - $TO_RUN is not a supported container"
        print_help;;
 esac
@@ -54,10 +54,17 @@ build_image ubuntu18.04
 build_image ubuntu19.04
 build_image debian8
 build_image debian9
+build_image debian10
 build_image centos7
 else
 build_image "$TO_RUN"
 fi
 
+# Clean up the intermediate images
+echo "Removing previous image versions..."
+docker image prune -f
+
 echo "Docker image created for $TO_RUN. Use docker image ls to see all images."
+echo "Run a build with: ./run_container.sh $TO_RUN"
+echo "Done."
 exit
