@@ -33,7 +33,7 @@ Alternatively, you may specify a single supported distribution. For example, for
 ```
 The input should match the directory name of the target distribution. Note that the `run_container.sh` script described below will only work for distributions that have successfully generated docker images.
 
-Building each docker images will take several minutes. To ensure that the docker images were created successfully, run:
+Building each docker image will take several minutes. To ensure that the docker images were created successfully, run:
 ```
 docker image ls
 ```
@@ -81,7 +81,7 @@ docker container prune
 
 ### Output Bundles
 
-Running a docker image container will place the generated output bundle in the `DEPLOYMENTS` directory in the `Docker-Builder` folder.
+Running a docker image container will place the generated output bundle in the `DEPLOYMENTS` directory in the `Docker-Builder` folder. The output bundle will be in the format of a tarball archive, and can be unpacked anywhere. To generate IOCs using this output tarball, it is recommended to use [initIOC](https://github.com/epicsNSLS2-deploy/initIOC). Step by step instructions for using this script are available [here](https://epicsnsls2-deploy.github.io/Deploy-Docs/#initIOC-step-by-step-example).
 
 ### Supported Distributions
 
@@ -98,7 +98,7 @@ Feel free to make an issue or pull request if you desire further distribution su
 
 ### Contributing
 
-The `Docker-Builder` has been tested with `.build_image.sh all` and `./run_container.sh all` on the following host distributions:
+The `Docker-Builder` has been tested with `./build_image.sh all` and `./run_container.sh all` on the following host distributions:
 
 * Ubuntu 18.04 LTS
 * Debian 9
@@ -108,10 +108,22 @@ If you have used `Docker-Builder` on an OS not listed here, please feel free to 
 
 In addition, if you have created a Dockerfile for a distribution not supported by default by `Docker-Builder` feel free to create a pull request.
 
+### Install Configurations
+
+Docker builder supports building any install configurations that can be read by `installSynApps`. By default, each distribution's docker container clones a copy of the [Install-Configurations](https://github.com/epicsNSLS2-deploy/Install-Configurations) repository, and uses an install configuration located within. To use a different configuration, you may edit the `run_build.sh` script for each distribution, and rerun 
+```
+./build_image all
+```
+to re-initiaizlize the docker container. If you prefer to use a local configuration rather than clone it at runtime, add:
+```
+COPY./PATH_TO_INSTALL_CONFIG ./
+```
+as the second to last line in the `Dockerfile`. You will also have to rebuild the image. Note that in this case, the image must be rebuilt every time changes are made to the config.
+
 ### Future plans
 
-Currently, `Docker-Builder` pulls its install configuration from the upstream of `installSynApps`, meaning that configuration is limited. The intention is to create a git repository containing all install configurations that may be required. Updating this repository and then triggering a build will cause the image to use updated install configurations.
+Currently, `Docker-Builder` only works on linux hosts with linux distribution targets. Support for windows is planned, for the future, and should allow for windows and linux builds on windows. 
 
-Alternatively, another possible solution is to include and install configuration for each distribution with `Docker-Builder` though this would mean a required rebuild of all images to build with new versions.
+Another future feature planned is to add an easier way to handle custom install configurations, that would hopefully automate the steps described in the above section.
 
 If you would like any other feature to be added to `Docker-Builder`, please add it as an [issue](https://github.com/epicsNSLS2-deploy/Docker-Builder/issues).
