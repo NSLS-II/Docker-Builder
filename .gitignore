@@ -5,3 +5,4 @@
 *.cid
 *.log
 logs/
+move_to_staging.sh

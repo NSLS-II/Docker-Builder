@@ -2,7 +2,8 @@
 FROM centos:7
 
 # check for updates and ugrade packages
-RUN yum check-update && yum update
+RUN yum check-update || { rc=$?; [ "$rc" -eq 100 ] && exit 0; exit "$rc"; }
+RUN yum -y update
 
 # Python + pip required for installSynApps
 RUN yum -y install epel-release
