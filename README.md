@@ -93,6 +93,7 @@ Supported linux distributions are whatever distributions have a Dockerfile in `D
 * Debian 9
 * Debian 10
 * CentOS 7
+* CentOS 8
 
 Feel free to make an issue or pull request if you desire further distribution support.
 
