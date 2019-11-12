@@ -11,7 +11,7 @@ RUN dnf -y install python36 python3-pip
 RUN python3 -m pip install --upgrade pip
 
 # Required build packages
-RUN dnf -y install git wget tar make cmake gcc gcc-c++ pkgconfig
+RUN dnf -y install git wget tar make cmake gcc gcc-c++ pkgconfig perl-devel
 
 # Packages required for building EPICS
 RUN dnf -y install libtirpc-devel

@@ -11,7 +11,7 @@ RUN yum -y install python36 python36-pip
 RUN python3 -m pip install --upgrade pip
 
 # Required build packages
-RUN yum -y install git wget tar make cmake gcc gcc-c++ pkgconfig
+RUN yum -y install git wget tar make cmake gcc gcc-c++ pkgconfig perl-devel
 
 # Packages required for building EPICS
 RUN yum -y install libxml2-devel pcre-devel re2c libXext-devel
