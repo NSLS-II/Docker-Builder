@@ -1,7 +1,7 @@
 *~
 *#
 *.tgz
-*README*.txt
+*README_*.txt
 *.cid
 *.log
 logs/
