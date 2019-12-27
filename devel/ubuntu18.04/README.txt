@@ -6,6 +6,9 @@ EPICS and synApps
 In addition, installSynApps and several install configurations have been loaded into the
 /epics/utils directory.
 
+Before you continue, you may wish to update all the versions for the Install-Configurations.
+Use the update_and_tag.sh script, and simply respond 'n' when asked if you wish to tag and push.
+
 You may run
 
 ./installCLI.py -c ../Install-Configurations/minConfigureLinux -i /epics/src -p -m
