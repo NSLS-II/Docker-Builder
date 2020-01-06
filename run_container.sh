@@ -12,6 +12,8 @@ function run_container () {
     echo "Copying package..."
     docker cp $CONTAINER_ID:/installSynApps/DEPLOYMENTS $(pwd)/DEPLOYMENTS/.
     mv DEPLOYMENTS/DEPLOYMENTS/* DEPLOYMENTS/.
+    rm DEPLOYMENTS/cleanup.sh
+#    rm DEPLOYMENTS/opis.tgz
     rmdir DEPLOYMENTS/DEPLOYMENTS
     echo "Shutting down the $CONTAINER_NAME container."
     docker container rm $CONTAINER_ID
