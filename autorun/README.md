@@ -27,12 +27,12 @@ crontab -e
 ```
 Then, add the following job:
 ```
-00 05 * * * cd $DOCKER_BUILDER/autorun && bash check_and_run_builds.sh >> logs/BUILD_$(date +\%Y-\%m-\%d).log
+00 05 * * * cd $DOCKER_BUILDER/autorun && bash check_and_run_builds.sh >> builds/BUILD_$(date +\%Y-\%m-\%d).log
 ```
 Replacing `$DOCKER_BUILDER` with the absolute path to your `Docker-Builder` folder.
 
 Then add another job:
 ```
-00 07 * * * cd $DOCKER_BUILDER/autorun/logs && clear_non_build_logs.sh
+00 07 * * * cd $DOCKER_BUILDER/autorun/builds && bash clear_non_build_logs.sh
 ```
 again, replacing `$DOCKER_BUILDER`.
