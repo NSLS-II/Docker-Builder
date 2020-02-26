@@ -3,7 +3,6 @@
 The simplest way to automate the process of running `Docker-Builder` is to use a cronjob,
 and the helper scripts in this directory.
 
-
 ### Setup Docker Images
 
 Begin by following the `README` file in the root of the `Docker-Builder` project to configure the images 
@@ -32,6 +31,7 @@ isadev/centos8       latest              0de42b00f1ac        2 months ago       
 isadev/debian10      latest              e1d07a6cf5ac        2 months ago        886MB
 isadev/ubuntu18.04   latest              c288ebeb04d2        2 months ago        746MB
 ```
+
 ### Creating a Cronjob
 
 Before we add the crobjob, check that the ADCore version number in the `PREVIOUS_VERSION.txt` file is the current one. Otherwise, the cronjob will execute after setup.
@@ -44,10 +44,16 @@ Then, add the following job:
 ```
 00 05 * * * cd $DOCKER_BUILDER/autorun && bash check_and_run_builds.sh >> builds/BUILD_$(date +\%Y-\%m-\%d).log
 ```
-Replacing `$DOCKER_BUILDER` with the absolute path to your `Docker-Builder` folder.
+Replacing `$DOCKER_BUILDER` with the absolute path to your `Docker-Builder` folder. This cronjob will run
+at 5AM every day, and will check if the ADCore version has changed on github. If it has, it will execute
+```
+./run_container.sh all
+```
+and generate bundles for each distribution. These will be placed in `DEPLOYMENTS`
 
 Then add another job:
 ```
 00 07 * * * cd $DOCKER_BUILDER/autorun/builds && bash clear_non_build_logs.sh
 ```
-again, replacing `$DOCKER_BUILDER`.
+again, replacing `$DOCKER_BUILDER`. This will remove any logs from cron checks that
+did not result in builds i.e. every time the cron runs and ther is not a new areaDetector version.
