@@ -5,18 +5,25 @@
 # from the container after build completion, and then to free the container.
 function run_container () {
     CONTAINER_NAME=$1
-    echo "Starting $CONTAINER_NAME build"
-    docker run --cidfile "$CONTAINER_NAME"_id.cid isa/"$CONTAINER_NAME"
+    ADCORE_VERSION=$2
+    echo "Starting $CONTAINER_NAME build..."
+    
+    echo "Executing build targeting ADCore version $ADCORE_VERSION..."
+    docker run -e ADCORE_VERSION=$ADCORE_VERSION --cidfile "$CONTAINER_NAME"_id.cid isa/"$CONTAINER_NAME" 
+
+    echo "Copying package..."
     CONTAINER_ID=$(cat "$CONTAINER_NAME"_id.cid)
     rm "$CONTAINER_NAME"_id.cid
-    echo "Copying package..."
     docker cp $CONTAINER_ID:/installSynApps/DEPLOYMENTS $(pwd)/DEPLOYMENTS/.
     mv DEPLOYMENTS/DEPLOYMENTS/* DEPLOYMENTS/.
     rm DEPLOYMENTS/cleanup.sh
-#    rm DEPLOYMENTS/opis.tgz
     rmdir DEPLOYMENTS/DEPLOYMENTS
-    echo "Shutting down the $CONTAINER_NAME container."
+    
+    echo "Shutting down the $CONTAINER_NAME container..."
     docker container rm $CONTAINER_ID
+    
+    echo "Done."
+    echo
 }
 
 # Print the help message
@@ -27,6 +34,7 @@ function print_help () {
     echo "  ./run_container.sh all - will run all docker containers sequentially."
     echo "  ./run_container.sh [Distribution Branch] - will run all containers for distro branch. Ex. debian"
     echo "  ./run_container.sh [Distribution] - will run a single container."
+    echo "  ./run_container.sh [Run Target] [ADCore Release] - will run whichever target (distribution, distro branch, all) with a specific ADCore release (R3-8 and higher)"
     echo
     echo "  Ex. ./run_container.sh ubuntu18.04"
     echo "  Ex. ./run_container.sh debian"
@@ -38,13 +46,18 @@ function print_help () {
 }
 
 # First check if number of arguments is correct
-if [ "$#" != "1" ];
+if [ "$#" == "1" ];
 then
-echo
-echo "Exactly 1 argument is required for run_container.sh."
-print_help
-else
 TO_RUN=$1
+ADCORE_RELEASE="newest"
+elif [ "$#" == "2" ];
+then
+TO_RUN=$1
+ADCORE_RELEASE=$2
+else
+echo
+echo "Exactly 1 or 2 arguments are required for run_container.sh."
+print_help
 fi
 
 
@@ -67,28 +80,28 @@ mkdir logs
 # run the run_container function. All terminal output placed in logfile
 if [ "$TO_RUN" = "all" ];
 then
-run_container ubuntu18.04 |& tee logs/Build-Log-$TIMESTAMP.log
-run_container ubuntu19.04 |& tee -a logs/Build-Log-$TIMESTAMP.log
-run_container debian8 |& tee -a logs/Build-Log-$TIMESTAMP.log
-run_container debian9 |& tee -a logs/Build-Log-$TIMESTAMP.log
-run_container debian10 |& tee -a logs/Build-Log-$TIMESTAMP.log
-run_container centos7 |& tee -a logs/Build-Log-$TIMESTAMP.log
-run_container centos8 |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container ubuntu18.04 $ADCORE_RELEASE |& tee logs/Build-Log-$TIMESTAMP.log
+run_container ubuntu19.04 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container debian8 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container debian9 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container debian10 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container centos7 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container centos8 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
 elif [ "$TO_RUN" = "debian" ];
 then
-run_container debian8 |& tee -a logs/Build-Log-$TIMESTAMP.log
-run_container debian9 |& tee -a logs/Build-Log-$TIMESTAMP.log
-run_container debian10 |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container debian8 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container debian9 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container debian10 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
 elif [ "$TO_RUN" = "ubuntu" ];
 then
-run_container ubuntu18.04 |& tee logs/Build-Log-$TIMESTAMP.log
-run_container ubuntu19.04 |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container ubuntu18.04 $ADCORE_RELEASE |& tee logs/Build-Log-$TIMESTAMP.log
+run_container ubuntu19.04 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
 elif [ "$TO_RUN" = "centos" ];
 then
-run_container centos7 |& tee -a logs/Build-Log-$TIMESTAMP.log
-run_container centos8 |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container centos7 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container centos8 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
 else
-run_container "$TO_RUN" |& tee logs/Build-Log-$TIMESTAMP.log
+run_container "$TO_RUN" $ADCORE_RELEASE |& tee logs/Build-Log-$TIMESTAMP.log
 fi
 
 echo "Build done. Bundles placed in ./DEPLOYMENTS"
