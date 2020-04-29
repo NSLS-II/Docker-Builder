@@ -1,6 +1,6 @@
 # Docker-Builder
 
-An exploration into using docker containers to trigger builds on all OS with [installSynApps](https://github.com/epicsNSLS2-deploy/installSynApps).
+An exploration into using docker containers to trigger EPICS areaDetector builds on many supported distributions with [installSynApps](https://github.com/epicsNSLS2-deploy/installSynApps).
 
 ### Setup
 
@@ -126,7 +126,5 @@ as the second to last line in the `Dockerfile`. You will also have to rebuild th
 ### Future plans
 
 Currently, `Docker-Builder` only works on linux hosts with linux distribution targets. Support for windows is planned, for the future, and should allow for windows and linux builds on windows. 
-
-Another future feature planned is to add an easier way to handle custom install configurations, that would hopefully automate the steps described in the above section.
 
 If you would like any other feature to be added to `Docker-Builder`, please add it as an [issue](https://github.com/epicsNSLS2-deploy/Docker-Builder/issues).
