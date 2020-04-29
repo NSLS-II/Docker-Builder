@@ -65,7 +65,7 @@ fi
 if [ "$TO_RUN" != "help" ];
 then
 case $TO_RUN in 
-    ubuntu18.04|ubuntu19.04|debian8|debian9|debian10|centos7|centos8|debian|ubuntu|centos|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
+    ubuntu18.04|ubuntu19.04|ubuntu20.04|debian8|debian9|debian10|centos7|centos8|debian|ubuntu|centos|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
     *) echo "ERROR - $TO_RUN is not a supported container"
        print_help;;
 esac
@@ -82,6 +82,7 @@ if [ "$TO_RUN" = "all" ];
 then
 run_container ubuntu18.04 $ADCORE_RELEASE |& tee logs/Build-Log-$TIMESTAMP.log
 run_container ubuntu19.04 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container ubuntu20.04 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
 run_container debian8 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
 run_container debian9 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
 run_container debian10 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
@@ -96,6 +97,7 @@ elif [ "$TO_RUN" = "ubuntu" ];
 then
 run_container ubuntu18.04 $ADCORE_RELEASE |& tee logs/Build-Log-$TIMESTAMP.log
 run_container ubuntu19.04 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container ubuntu20.04 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
 elif [ "$TO_RUN" = "centos" ];
 then
 run_container centos7 $ADCORE_RELEASE |& tee -a logs/Build-Log-$TIMESTAMP.log
