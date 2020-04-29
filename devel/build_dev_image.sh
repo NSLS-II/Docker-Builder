@@ -21,7 +21,7 @@ function print_help () {
     echo "  Ex. ./build_dev_image.sh debian"
     echo "  Ex. ./build_dev_image.sh all"
     echo
-    echo "Supported distributions: [ ubuntu18.04, ubuntu19.04, debian8, debian9, debian10, centos7, centos8 ]"
+    echo "Supported distributions: [ ubuntu18.04, ubuntu19.04, ubuntu20.04, debian8, debian9, debian10, centos7, centos8 ]"
     echo
     exit
 }
@@ -41,7 +41,7 @@ fi
 if [ "$TO_RUN" != "help" ];
 then
 case $TO_RUN in 
-    ubuntu18.04|ubuntu19.04|debian8|debian9|debian10|centos7|centos8|ubuntu|debian|centos|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
+    ubuntu18.04|ubuntu19.04|ubuntu20.04|debian8|debian9|debian10|centos7|centos8|ubuntu|debian|centos|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
     *) echo "ERROR - $TO_RUN is not a supported container"
        print_help;;
 esac
@@ -55,6 +55,7 @@ if [ "$TO_RUN" = "all" ];
 then
 build_image ubuntu18.04
 build_image ubuntu19.04
+build_image ubuntu20.04
 build_image debian8
 build_image debian9
 build_image debian10
@@ -69,6 +70,7 @@ elif [ "$TO_RUN" = "ubuntu" ];
 then
 build_image ubuntu18.04
 build_image ubuntu19.04
+build_image ubuntu20.04
 elif [ "$TO_RUN" = "centos" ];
 then
 build_image centos7

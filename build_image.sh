@@ -21,7 +21,7 @@ function print_help () {
     echo "  Ex. ./build_image.sh debian"
     echo "  Ex. ./build_image.sh all"
     echo
-    echo "Supported distributions: [ ubuntu18.04, ubuntu19.04, debian8, debian9, debian10, centos7, centos8 ]"
+    echo "Supported distributions: [ ubuntu18.04, ubuntu19.04, ubuntu20.04, debian8, debian9, debian10, centos7, centos8 ]"
     echo
     exit
 }

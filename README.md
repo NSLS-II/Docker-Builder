@@ -89,6 +89,7 @@ Supported linux distributions are whatever distributions have a Dockerfile in `D
 
 * Ubuntu 18.04
 * Ubuntu 19.04
+* Ubuntu 20.04
 * Debian 8
 * Debian 9
 * Debian 10
@@ -103,6 +104,7 @@ The `Docker-Builder` has been tested with `./build_image.sh all` and `./run_cont
 
 * Ubuntu 18.04 LTS
 * Debian 9
+* Debian 10
 * CentOS 7
 
 If you have used `Docker-Builder` on an OS not listed here, please feel free to create a pull request if it was successful, or if an error was encountered, please report it as an [issue](https://github.com/epicsNSLS2-deploy/Docker-Builder/issues).

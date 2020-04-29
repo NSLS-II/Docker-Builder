@@ -40,7 +40,7 @@ function print_help () {
     echo "  Ex. ./run_container.sh debian"
     echo "  Ex. ./run_container.sh all"
     echo
-    echo "Supported containers: [ ubuntu18.04, ubuntu19.04, debian8, debian9, debian10, centos7, centos8 ]"
+    echo "Supported containers: [ ubuntu18.04, ubuntu19.04, ubuntu20.04, debian8, debian9, debian10, centos7, centos8 ]"
     echo
     exit
 }
