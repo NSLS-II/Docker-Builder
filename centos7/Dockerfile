@@ -24,7 +24,7 @@ RUN yum -y install boost-devel
 RUN yum -y install libraw1394-devel
 
 # Install some necessary python packages
-RUN python3 -m pip install distro
+RUN python3 -m pip install distro requests
 
 # Copy the script
 COPY ./run_build.sh ./

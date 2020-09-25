@@ -9,7 +9,7 @@ function run_container () {
     echo "Starting $CONTAINER_NAME build..."
     
     echo "Executing build targeting ADCore version $ADCORE_VERSION..."
-    docker run -e ADCORE_VERSION=$ADCORE_VERSION --cidfile "$CONTAINER_NAME"_id.cid isa/"$CONTAINER_NAME" 
+    docker run -e ADCORE_VERSION=$ADCORE_VERSION --env-file ./config.env --cidfile "$CONTAINER_NAME"_id.cid isa/"$CONTAINER_NAME" 
 
     echo "Copying package..."
     CONTAINER_ID=$(cat "$CONTAINER_NAME"_id.cid)
