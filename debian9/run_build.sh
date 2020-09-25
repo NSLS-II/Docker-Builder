@@ -3,12 +3,13 @@
 # This bash script will be run with when the docker image is run
 git clone --single-branch --branch=$INSTALL_SYNAPPS_BRANCH $INSTALL_SYNAPPS_URL
 echo "Cloned installSynApps w/ branch $INSTALL_SYNAPPS_BRANCH"
+cd installSynApps
 git clone --single-branch --branch=$INSTALL_CONFIG_BRANCH $INSTALL_CONFIG_URL
 echo "Cloned Install-Configurations w/ branch $INSTALL_CONFIG_BRANCH"
-cd installSynApps
+
 if [ "$ADCORE_VERSION" == "newest" ];
 then
-python3 -u installCLI.py -v -c Install-Configurations/configureDeb8
+python3 -u installCLI.py -v -c Install-Configurations/configureDeb9
 else
 cd Install-Configurations
 echo "Checking out config version $ADCORE_VERSION"

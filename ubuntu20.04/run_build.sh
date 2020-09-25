@@ -9,7 +9,7 @@ echo "Cloned Install-Configurations w/ branch $INSTALL_CONFIG_BRANCH"
 
 if [ "$ADCORE_VERSION" == "newest" ];
 then
-python3 -u installCLI.py -v -c Install-Configurations/configureDeb8
+python3 -u installCLI.py -v -c Install-Configurations/configureDeb9
 else
 cd Install-Configurations
 echo "Checking out config version $ADCORE_VERSION"

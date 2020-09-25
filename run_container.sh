@@ -74,7 +74,7 @@ print_help
 fi
 
 TIMESTAMP=$(date '+%Y-%m-%d-%H:%M:%S')
-mkdir logs
+mkdir -p logs
 
 # Otherwise if TO_RUN is valid container name or all
 # run the run_container function. All terminal output placed in logfile
