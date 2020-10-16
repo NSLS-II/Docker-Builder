@@ -9,11 +9,11 @@ echo "Cloned Install-Configurations w/ branch $INSTALL_CONFIG_BRANCH"
 
 if [ "$ADCORE_VERSION" == "newest" ];
 then
-python3 -u installCLI.py -v -c Install-Configurations/configureDeb8
+python3 -u installCLI.py -v -c Install-Configurations/$DEBIAN8_CONFIG
 else
 cd Install-Configurations
 echo "Checking out config version $ADCORE_VERSION"
 git checkout -q $ADCORE_VERSION
 cd ..
 fi
-python3 -u installCLI.py -y -s -c Install-Configurations/configureDeb8 -i /epics -p
+python3 -u installCLI.py -y -s -c Install-Configurations/$DEBIAN8_CONFIG -i /epics -p

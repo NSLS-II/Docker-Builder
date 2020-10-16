@@ -10,7 +10,7 @@ echo "Cloned Install-Configurations w/ branch $INSTALL_CONFIG_BRANCH"
 
 if [ "$ADCORE_VERSION" == "newest" ];
 then
-python3 -u installCLI.py -v -c Install-Configurations/configureCentOS7
+python3 -u installCLI.py -v -c Install-Configurations/$CENTOS7_CONFIG
 else
 cd Install-Configurations
 echo "Checking out config version $ADCORE_VERSION"
@@ -18,4 +18,4 @@ git checkout -q $ADCORE_VERSION
 cd ..
 fi
 
-python3 -u installCLI.py -y -s -c Install-Configurations/configureCentOS7 -i /epics -p
+python3 -u installCLI.py -y -s -c Install-Configurations/$CENTOS7_CONFIG -i /epics -p
