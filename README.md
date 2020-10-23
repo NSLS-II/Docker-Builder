@@ -16,7 +16,7 @@ Here are links to guides for setting up docker engine for various linux distribu
 
 ### Generating the Images
 
-`Docker-Builder` works by creating Docker image containers for each OS on your system. When run, these containers clone the [installSynApps](https://github.com/epicsNSLS2-deploy/installSynApps) python module, and use it to clone, build, and package all of EPICS, synApps, and areaDetector.
+`Docker-Builder` works by creating Docker image containers for each OS on your system. When run, these containers clone the [installSynApps](https://github.com/epicsNSLS2-deploy/installSynApps) python utility, and use it to clone, build, and package all of EPICS, synApps, and areaDetector.
 
 To generate the docker container images, clone the Docker-Builder repository with:
 ```
@@ -49,7 +49,7 @@ ubuntu              18.04               a2a15febcdf3        5 days ago          
 debian              9                   f26939cc87ef        6 days ago          101MB
 debian              8                   2c5f66c0d4e0        6 days ago          129MB
 ```
-Note that you will see an image for the distribution containers (ubuntu 18.04, debian 8 etc.), and then `isa/$DISTRIBUTION` (ex. isa/debian9, isa/ubuntu19.04), which are the actual build containers. Each container is around 1GB in size.
+Note that you will see an image for the distribution containers (ubuntu 18.04, debian 8 etc.), and then `isa/$DISTRIBUTION` (ex. isa/debian9, isa/ubuntu19.04), which are the actual build images. Each image is around 1GB in size.
 
 You should only need to run the `build_image.sh` script once per distribution, unless there is an update to its Dockerfile. This means that you can run `build_image.sh all` once on your development server, and you will not have to run it again. From there you will only need to use the `run_container.sh` script as described below.
 
@@ -70,7 +70,7 @@ To see a list of supported distributions, run:
 ./run_container.sh help
 ```
 
-It is recommended to run `Docker-Builder` on a fairly powerful machine, as the build scales fairly well along with the number of CPU cores. Each container takes roughly 5 minutes to build on a 16 core Intel Xeon Silver 4110 based machine, with default docker hardware usage settings. With the currently supported 4 distributions, a `./run_container all` run took around 20 minutes on the same machine.
+It is recommended to run `Docker-Builder` on a fairly powerful machine, as the build scales fairly well along with the number of CPU cores. Each container takes roughly 5 minutes to build on a 16 core Intel Xeon Silver 4110 based machine, with default docker hardware usage settings. With the currently supported distributions, a `./run_container all` run took around 40 minutes on the same machine.
 
 Each execution of `run_container.sh` will generate a log file in `logs/`. The filename will be a build timestamp. You may look through these files in order to catch any build errors.
 
@@ -81,7 +81,9 @@ docker container prune
 
 ### Output Bundles
 
-Running a docker image container will place the generated output bundle in the `DEPLOYMENTS` directory in the `Docker-Builder` folder. The output bundle will be in the format of a tarball archive, and can be unpacked anywhere. To generate IOCs using this output tarball, it is recommended to use [initIOC](https://github.com/epicsNSLS2-deploy/initIOC). Step by step instructions for using this script are available [here](https://epicsnsls2-deploy.github.io/Deploy-Docs/#initIOC-step-by-step-example).
+Running a docker image container will place the generated output bundle in the `DEPLOYMENTS` directory in the `Docker-Builder` folder. The output bundle will be in the format of a tarball archive, and can be unpacked anywhere. To generate IOCs using this output tarball, it is recommended to start the a template, for which one should be included for each IOC in the bundle in the `ioc-templates` directory.
+
+You may also use the tool that generates these templates yourself, available here: [initIOC](https://github.com/epicsNSLS2-deploy/initIOC). Step by step instructions for using this script are available [here](https://epicsnsls2-deploy.github.io/Deploy-Docs/#initIOC-step-by-step-example).
 
 ### Supported Distributions
 
@@ -113,13 +115,12 @@ In addition, if you have created a Dockerfile for a distribution not supported b
 
 ### Install Configurations
 
-Docker builder supports building any install configurations that can be read by `installSynApps`. By default, each distribution's docker container clones a copy of the [Install-Configurations](https://github.com/epicsNSLS2-deploy/Install-Configurations) repository, and uses an install configuration located within. To use a different configuration, you may edit the `run_build.sh` script for each distribution, and rerun 
+Docker builder supports building any install configurations that can be read by `installSynApps`. By default, each distribution's docker container clones a copy of the [Install-Configurations](https://github.com/epicsNSLS2-deploy/Install-Configurations) repository, and uses an install configuration located within. To use a different configuration, you may edit the `config.env` file, which specifies the location from which to clone both `installSynApps` and the configurations, and which configuration from within that repository to use for each distribution's build. 
+
+
+If you prefer to use a local configuration rather than clone it at runtime, add:
 ```
-./build_image all
-```
-to re-initiaizlize the docker container. If you prefer to use a local configuration rather than clone it at runtime, add:
-```
-COPY./PATH_TO_INSTALL_CONFIG ./
+COPY ./PATH_TO_INSTALL_CONFIG ./
 ```
 as the second to last line in the `Dockerfile`. You will also have to rebuild the image. Note that in this case, the image must be rebuilt every time changes are made to the config.
 

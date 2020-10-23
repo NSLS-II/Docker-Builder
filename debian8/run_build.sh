@@ -7,7 +7,7 @@ cd installSynApps
 git clone --single-branch --branch=$INSTALL_CONFIG_BRANCH $INSTALL_CONFIG_URL
 echo "Cloned Install-Configurations w/ branch $INSTALL_CONFIG_BRANCH"
 
-if [ "$ADCORE_VERSION" == "newest" ];
+if [ "$ADCORE_VERSION" == "NEWEST" ];
 then
 python3 -u installCLI.py -v -c Install-Configurations/$DEBIAN8_CONFIG
 else
@@ -16,4 +16,4 @@ echo "Checking out config version $ADCORE_VERSION"
 git checkout -q $ADCORE_VERSION
 cd ..
 fi
-python3 -u installCLI.py -y -s -c Install-Configurations/$DEBIAN8_CONFIG -i /epics -p
+python3 -u installCLI.py -y -c Install-Configurations/$DEBIAN8_CONFIG -i /epics -p

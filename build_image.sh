@@ -63,6 +63,7 @@ build_image centos7
 build_image centos8
 elif [ "$TO_RUN" = "debian" ];
 then
+build_image debian7
 build_image debian8
 build_image debian9
 build_image debian10

@@ -7,7 +7,7 @@ cd installSynApps
 git clone --single-branch --branch=$INSTALL_CONFIG_BRANCH $INSTALL_CONFIG_URL
 echo "Cloned Install-Configurations w/ branch $INSTALL_CONFIG_BRANCH"
 
-if [ "$ADCORE_VERSION" == "newest" ];
+if [ "$ADCORE_VERSION" == "NEWEST" ];
 then
 python3 -u installCLI.py -v -c Install-Configurations/$UBUNTU19_CONFIG
 else
