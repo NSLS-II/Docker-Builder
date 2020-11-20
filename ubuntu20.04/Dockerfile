@@ -25,7 +25,7 @@ RUN apt-get -y install libboost-dev libboost-test-dev libboost-system-dev
 RUN apt-get -y install libraw1394-dev
 
 # Install distro package
-RUN python3 -m pip install distro
+RUN python3 -m pip install distro requests
 
 # copy the script
 COPY ./run_build.sh ./

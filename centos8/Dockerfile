@@ -26,7 +26,7 @@ RUN dnf -y install boost-devel
 RUN dnf -y install libraw1394
 
 # Install some necessary python packages
-RUN python3 -m pip install distro
+RUN python3 -m pip install distro requests
 
 # Copy the script
 COPY ./run_build.sh ./

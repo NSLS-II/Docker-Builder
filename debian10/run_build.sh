@@ -1,9 +1,12 @@
 #!/bin/bash
 
 # This bash script will be run with when the docker image is run
-git clone https://github.com/epicsNSLS2-deploy/installSynApps
+git clone --single-branch --branch=$INSTALL_SYNAPPS_BRANCH $INSTALL_SYNAPPS_URL
+echo "Cloned installSynApps w/ branch $INSTALL_SYNAPPS_BRANCH"
 cd installSynApps
-git clone https://github.com/epicsNSLS2-deploy/Install-Configurations
+git clone --single-branch --branch=$INSTALL_CONFIG_BRANCH $INSTALL_CONFIG_URL
+echo "Cloned Install-Configurations w/ branch $INSTALL_CONFIG_BRANCH"
+
 if [ "$ADCORE_VERSION" == "newest" ];
 then
 python3 -u installCLI.py -v -c Install-Configurations/configureDeb10
