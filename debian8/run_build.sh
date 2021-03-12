@@ -16,4 +16,4 @@ echo "Checking out config version $ADCORE_VERSION"
 git checkout -q $ADCORE_VERSION
 cd ..
 fi
-python3 -u installCLI.py -y -c Install-Configurations/$DEBIAN8_CONFIG -i /epics -p
+python3 -u installCLI.py -y -c Install-Configurations/$DEBIAN8_CONFIG -i /epics -p -s
