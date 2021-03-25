@@ -4,6 +4,7 @@
 function build_image () {
     IMAGE_NAME=$1
     cd $IMAGE_NAME
+    #docker build --no-cache -t isa/$IMAGE_NAME .
     docker build -t isa/$IMAGE_NAME .
     cd ..
 }
@@ -21,7 +22,7 @@ function print_help () {
     echo "  Ex. ./build_image.sh debian"
     echo "  Ex. ./build_image.sh all"
     echo
-    echo "Supported distributions: [ ubuntu18.04, ubuntu19.04, ubuntu20.04, debian8, debian9, debian10, centos7, centos8 ]"
+    echo "Supported distributions: [ ubuntu18.04, ubuntu19.04, ubuntu20.04, debian8, debian9, debian10, centos7, centos8, rhel8 ]"
     echo
     exit
 }
@@ -41,7 +42,7 @@ fi
 if [ "$TO_RUN" != "help" ];
 then
 case $TO_RUN in 
-    ubuntu18.04|ubuntu19.04|ubuntu20.04|debian8|debian9|debian10|centos7|centos8|ubuntu|debian|centos|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
+    ubuntu18.04|ubuntu19.04|ubuntu20.04|debian8|debian9|debian10|centos7|centos8|rhel8|ubuntu|debian|centos|rhel|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
     *) echo "ERROR - $TO_RUN is not a supported container"
        print_help;;
 esac
@@ -61,6 +62,7 @@ build_image debian9
 build_image debian10
 build_image centos7
 build_image centos8
+build_image rhel8
 elif [ "$TO_RUN" = "debian" ];
 then
 build_image debian7
@@ -76,6 +78,9 @@ elif [ "$TO_RUN" = "centos" ];
 then
 build_image centos7
 build_image centos8
+elif [ "$TO_RUN" = "rhel" ];
+then
+build_image rhel8
 else
 build_image "$TO_RUN"
 fi

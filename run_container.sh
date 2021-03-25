@@ -37,7 +37,7 @@ function print_help () {
     echo "  Ex. ./run_container.sh debian"
     echo "  Ex. ./run_container.sh all"
     echo
-    echo "Supported containers: [ ubuntu18.04, ubuntu19.04, ubuntu20.04, debian8, debian9, debian10, centos7, centos8 ]"
+    echo "Supported containers: [ ubuntu18.04, ubuntu19.04, ubuntu20.04, debian8, debian9, debian10, centos7, centos8, rhel8 ]"
     echo
     exit
 }
@@ -62,7 +62,7 @@ fi
 if [ "$TO_RUN" != "help" ];
 then
 case $TO_RUN in 
-    ubuntu18.04|ubuntu19.04|ubuntu20.04|debian8|debian9|debian10|centos7|centos8|debian|ubuntu|centos|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
+    ubuntu18.04|ubuntu19.04|ubuntu20.04|debian8|debian9|debian10|centos7|centos8|rhel8|debian|ubuntu|centos|rhel|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
     *) echo "ERROR - $TO_RUN is not a supported container distribution"
        print_help;;
 esac
@@ -85,6 +85,7 @@ run_container debian9 |& tee -a logs/Build-Log-$TIMESTAMP.log
 run_container debian10 |& tee -a logs/Build-Log-$TIMESTAMP.log
 run_container centos7 |& tee -a logs/Build-Log-$TIMESTAMP.log
 run_container centos8 |& tee -a logs/Build-Log-$TIMESTAMP.log
+run_container rhel8 |& tee -a logs/Build-Log-$TIMESTAMP.log
 elif [ "$TO_RUN" = "debian" ];
 then
 run_container debian8 |& tee -a logs/Build-Log-$TIMESTAMP.log
@@ -99,6 +100,9 @@ elif [ "$TO_RUN" = "centos" ];
 then
 run_container centos7 |& tee -a logs/Build-Log-$TIMESTAMP.log
 run_container centos8 |& tee -a logs/Build-Log-$TIMESTAMP.log
+elif [ "$TO_RUN" = "rhel8" ];
+then
+run_container rhel8 |& tee -a logs/Build-Log-$TIMESTAMP.log
 else
 run_container "$TO_RUN" |& tee logs/Build-Log-$TIMESTAMP.log
 fi
