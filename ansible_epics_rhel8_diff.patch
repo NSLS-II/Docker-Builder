@@ -1,7 +1,15 @@
 diff --git a/config.env b/config.env
-index 935e27a..5dcbf38 100644
+index 935e27a..b00a396 100644
 --- a/config.env
 +++ b/config.env
+@@ -1,6 +1,6 @@
+ # Customize URLs to installSynApps tool and Install-Configurations
+ INSTALL_SYNAPPS_URL=https://github.com/NSLS-II/installSynApps
+-INSTALL_SYNAPPS_BRANCH=master
++INSTALL_SYNAPPS_BRANCH=feature-lean-bundles
+ INSTALL_CONFIG_URL=https://github.com/jwlodek/Install-Configurations
+ INSTALL_CONFIG_BRANCH=master
+ 
 @@ -14,8 +14,13 @@ UBUNTU19_CONFIG=configureDeb8
  UBUNTU20_CONFIG=configureDeb8
  CENTOS7_CONFIG=configureDeb9
@@ -32,7 +40,7 @@ index 125a8e9..6adbd8b 100644
  RUN yum check-update || { rc=$?; [ "$rc" -eq 100 ] && exit 0; exit "$rc"; }
  RUN yum -y update
 diff --git a/rhel8/run_build.sh b/rhel8/run_build.sh
-index 479e35e..d4d3eed 100755
+index 479e35e..62cf2f2 100755
 --- a/rhel8/run_build.sh
 +++ b/rhel8/run_build.sh
 @@ -17,4 +17,10 @@ echo "Checking out config version $ADCORE_VERSION"
@@ -44,10 +52,10 @@ index 479e35e..d4d3eed 100755
 +then
  python3 -u installCLI.py -y -s -c Install-Configurations/$RHEL8_CONFIG -i /epics -p
 +else
-+python3 -u installCLI.py -y -s -c /catools -p
++python3 -u installCLI.py -y -s -m -c /ansible_epics -p
 +fi
 diff --git a/run_container.sh b/run_container.sh
-index 0879094..2d1c648 100755
+index 0879094..f227154 100755
 --- a/run_container.sh
 +++ b/run_container.sh
 @@ -7,7 +7,7 @@ function run_container () {
@@ -55,7 +63,7 @@ index 0879094..2d1c648 100755
      echo "Starting $CONTAINER_NAME build..."
      
 -    docker run --env-file ./config.env --cidfile "$CONTAINER_NAME"_id.cid isa/"$CONTAINER_NAME" 
-+    docker run -v /tmp/catools_vol:/catools --env-file ./config.env --cidfile "$CONTAINER_NAME"_id.cid isa/"$CONTAINER_NAME"
++    docker run -v /tmp/ansible_epics_vol:/ansible_epics --env-file ./config.env --cidfile "$CONTAINER_NAME"_id.cid isa/"$CONTAINER_NAME"
  
      echo "Copying package..."
      CONTAINER_ID=$(cat "$CONTAINER_NAME"_id.cid)
