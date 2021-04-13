@@ -5,7 +5,7 @@ function build_image () {
     IMAGE_NAME=$1
     cd $IMAGE_NAME
     #docker build --no-cache -t isa/$IMAGE_NAME .
-    docker build -t isa/$IMAGE_NAME .
+    podman build -t isa/$IMAGE_NAME .
     cd ..
 }
 
@@ -41,7 +41,7 @@ fi
 # Check if input parameter is valid
 if [ "$TO_RUN" != "help" ];
 then
-case $TO_RUN in 
+case $TO_RUN in
     ubuntu18.04|ubuntu19.04|ubuntu20.04|debian8|debian9|debian10|centos7|centos8|rhel8|ubuntu|debian|centos|rhel|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
     *) echo "ERROR - $TO_RUN is not a supported container"
        print_help;;
@@ -87,7 +87,7 @@ fi
 
 # Clean up the intermediate images
 echo "Removing previous image versions..."
-docker image prune -f
+podman image prune -f
 
 echo "Docker image created for $TO_RUN. Use docker image ls to see all images."
 echo "Run a build with: ./run_container.sh $TO_RUN"

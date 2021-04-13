@@ -6,20 +6,20 @@
 function run_container () {
     CONTAINER_NAME=$1
     echo "Starting $CONTAINER_NAME build..."
-    
-    docker run --env-file ./config.env --cidfile "$CONTAINER_NAME"_id.cid isa/"$CONTAINER_NAME" 
+
+    podman run --env-file ./config.env --cidfile "$CONTAINER_NAME"_id.cid isa/"$CONTAINER_NAME"
 
     echo "Copying package..."
     CONTAINER_ID=$(cat "$CONTAINER_NAME"_id.cid)
     rm "$CONTAINER_NAME"_id.cid
-    docker cp $CONTAINER_ID:/installSynApps/DEPLOYMENTS $(pwd)/DEPLOYMENTS/.
+    podman cp $CONTAINER_ID:/installSynApps/DEPLOYMENTS $(pwd)/DEPLOYMENTS/.
     mv DEPLOYMENTS/DEPLOYMENTS/* DEPLOYMENTS/.
     rm DEPLOYMENTS/cleanup.sh
     rmdir DEPLOYMENTS/DEPLOYMENTS
-    
+
     echo "Shutting down the $CONTAINER_NAME container..."
-    docker container rm $CONTAINER_ID
-    
+    podman container rm $CONTAINER_ID
+
     echo "Done."
     echo
 }
@@ -61,7 +61,7 @@ fi
 # Check if input parameter is valid
 if [ "$TO_RUN" != "help" ];
 then
-case $TO_RUN in 
+case $TO_RUN in
     ubuntu18.04|ubuntu19.04|ubuntu20.04|debian8|debian9|debian10|centos7|centos8|rhel8|debian|ubuntu|centos|rhel|all) echo "Valid option $TO_RUN. Starting Docker-Builder...";;
     *) echo "ERROR - $TO_RUN is not a supported container distribution"
        print_help;;
